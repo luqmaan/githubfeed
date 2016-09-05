@@ -8,9 +8,10 @@ import {
   ScrollView,
   ListView,
   Image,
+  RefreshControl,
 } from 'react-native';
 
-const EventTypes = {
+export const EventTypes = {
   WatchEvent: 'starred',
   CreateEvent: 'created',
   ForkEvent: 'forked',
@@ -28,6 +29,9 @@ function generateRows({repos, events}) {
   }));
 }
 
+function formatGithubLink(path) {
+  return `https://github.com/${path}`;
+}
 
 export default class FeedListView extends Component {
 
@@ -59,11 +63,17 @@ export default class FeedListView extends Component {
         <ListView
           dataSource={this.state.dataSource}
           enableEmptySections
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.refreshing}
+              onRefresh={this.props.refresh}
+            />
+          }
           renderRow={({event, repo}) => {
             return (
               <View key={event.id} style={styles.listItem}>
                 <View style={styles.image}>
-                  <Image source={{uri: `${event.actor.avatar_url}v=3&s=40`}} style={{width: 20, height: 20}} />
+                  <Image source={{uri: `${event.actor.avatar_url}v=3&s=80`}} style={{width: 40, height: 40}} />
                 </View>
                 <View style={styles.text}>
                   <Text style={styles.action}>
