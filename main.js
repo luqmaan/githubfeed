@@ -1,9 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
+import Exponent from 'exponent';
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -92,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('githubfeed', () => githubfeed);
+AppRegistry.registerComponent('main', () => githubfeed);
