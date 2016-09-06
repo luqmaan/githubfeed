@@ -14,16 +14,15 @@ import {
 import _ from 'lodash';
 
 import FeedListView, {EventTypes} from './src/FeedListView';
-import receivedEvents from './data/received_events.json';
 import {GithubToken} from './constants/Secrets';
 
 const headers = new Headers();
 headers.append('Authorization', `token ${GithubToken}`);
 
 class githubfeed extends Component {
-
   constructor(props) {
     super(props);
+
     this.state = {
       events: [],
       repos: {},
@@ -46,7 +45,8 @@ class githubfeed extends Component {
   }
 
   loadRepos() {
-    const urls = _.uniq(receivedEvents.map(event => event.repo.url));
+    const urls = _.uniq(this.state.events.map(event => event.repo.url));
+
     urls.map((url) => {
       fetch(url, {headers})
       .then((res) => res.json())

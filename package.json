@@ -12,6 +12,7 @@
     "babel-preset-react-native-stage-0": "^1.0.1",
     "base-64": "^0.1.0",
     "exponent": "^9.0.6",
+    "moment": "^2.14.1",
     "react": "15.2.1",
     "react-native": "github:exponentjs/react-native#sdk-9.0.1",
     "react-native-link": "^4.1.0"

@@ -11,6 +11,8 @@ import {
   RefreshControl,
 } from 'react-native';
 
+import moment from 'moment';
+
 export const EventTypes = {
   WatchEvent: 'starred',
   CreateEvent: 'created',
@@ -72,17 +74,27 @@ export default class FeedListView extends Component {
           renderRow={({event, repo}) => {
             return (
               <View key={event.id} style={styles.listItem}>
-                <View style={styles.image}>
-                  <Image source={{uri: `${event.actor.avatar_url}v=3&s=80`}} style={{width: 40, height: 40}} />
-                </View>
-                <View style={styles.text}>
-                  <Text style={styles.action}>
-                    <Text style={styles.link}>{event.actor.display_login}</Text>
-                    <Text> {getEventName(event)} </Text>
-                    <Text style={styles.link}>{event.repo.name}</Text>
-                  </Text>
-                  <Text style={styles.description}>{repo && repo.description}</Text>
-                  <Text style={styles.stats}>{repo && `${repo.subscribers_count} 👀 ${repo.stargazers_count} ⭐ ${repo.forks_count} 🍴`}</Text>
+                <View style={styles.cols}>
+                  <View style={styles.image}>
+                    <Image source={{uri: `${event.actor.avatar_url}v=3&s=80`}} style={{width: 40, height: 40}} />
+                  </View>
+                  <View style={styles.text}>
+                    <Text style={{color: '#727678'}}>
+                      {moment(event.created_at).fromNow()}
+                    </Text>
+                    <Text style={styles.action}>
+                      <Text style={styles.link}>{event.actor.display_login}</Text>
+                      <Text> {getEventName(event)} </Text>
+                      <Text style={styles.link}>{event.repo.name}</Text>
+                    </Text>
+                    <Text style={styles.description}>{repo && repo.description}</Text>
+                    <Text
+                      style={{
+                        opacity: 0.7,
+                      }}>
+                        {repo && `${repo.subscribers_count} 👀 ${repo.stargazers_count} ⭐ ${repo.forks_count} 🍴`}
+                      </Text>
+                  </View>
                 </View>
               </View>
             );
@@ -98,16 +110,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listItem: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     borderBottomColor: '#bbc4e5',
     borderBottomWidth: 1,
+  },
+  date: {
+    alignItems: 'flex-end',
+    margin: 5,
+  },
+  cols: {
     flexWrap: 'nowrap',
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   image: {
     margin: 5,
     marginRight: 0,
+    opacity: 0.9,
   },
   text: {
     margin: 5,
@@ -122,7 +141,4 @@ const styles = StyleSheet.create({
   description: {
     color: '#727678'
   },
-  stats: {
-    opacity: 0.7,
-  }
 });
